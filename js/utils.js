@@ -4,6 +4,10 @@
   }
 
   _U.extend = function (obj1, obj2) {
+    var args = Array.prototype.slice.call(arguments);
+    if (args.length > 2) {
+      _U.extend.apply(this, args.slice(1));
+    }
     if (obj2 instanceof Function) {
       obj2 = obj2();
     }

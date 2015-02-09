@@ -10,8 +10,7 @@
       vel: "missing",
       dim: "missing"
     }
-    _U.extend(defaults, options);
-    _U.extend(this, defaults);
+    _U.extend(this, defaults, options);
 
     this.pos = _U.toCoord(this.pos);
     this.vel = _U.toCoord(this.vel);
