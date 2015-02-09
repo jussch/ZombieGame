@@ -18,4 +18,11 @@
     this.dim = new ZG.CollBox(this.pos, this.dim, {});
   };
 
+  DynamicObject.prototype.move = function () {
+    _U.try(this.moveEvent);
+    this.pos.plus(this.vel);
+    // Collision Detection Here:
+
+  };
+
 })();

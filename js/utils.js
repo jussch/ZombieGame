@@ -34,4 +34,12 @@
     child.prototype = new Surrogate();
   };
 
+  _U.try = function (fn) {
+    if (fn instanceof Function) {
+      return fn.bind(this)();
+    } else {
+      return fn;
+    }
+  };
+
 })();
