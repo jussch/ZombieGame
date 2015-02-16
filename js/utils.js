@@ -17,6 +17,11 @@
     return obj1;
   };
 
+  _U.clone = function (obj) {
+    if (!(obj instanceof Object)) throw new TypeError("obj must be an object.");
+    return _U.extend({}, obj);
+  };
+
   _U.defaultTo = function (obj, defaultObj) {
     if (!obj) {
       obj = defaultObj;
