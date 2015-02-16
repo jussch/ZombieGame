@@ -7,12 +7,11 @@
     _U.defaultTo(options, {});
     var defaults = {
       img = null,
-      sizeX = 1,
-      sizeY = 1,
+      size = 1,
       baseAngle = 0,
       angle = 0,
       parent = null,
-      dim = new ZG.Coord(10),
+      dim = 10,
       color = "white",
       opacity = 1,
       idxXMax = 1,
@@ -22,11 +21,15 @@
     };
     _U.extend(this, defaults, options);
 
+    this.dim = _U.toCoord(this.dim);
+    this.size = _U.toCoord(this.size);
     this.pos = this.pos || this.parent.pos;
   };
 
+  _U.mixin(Sprite);
+
   Sprite.prototype.draw = function (ctx) {
-    _U.try(this.drawEvent);
+    this.try(this.drawEvent);
     if (this.img) {
       this.drawImage(ctx);
     } else {
@@ -45,8 +48,8 @@
     }
     var sW = (this.img.width / this.idxXMax + 0.5) | 0;
     var sH = (this.img.height / this.idxYMax + 0.5) | 0;
-    var relW = (sW * this.sizeX / 2 + 0.5) | 0;
-    var relH = (sH * this.sizeY / 2 + 0.5)
+    var relW = (sW * this.size.x / 2 + 0.5) | 0;
+    var relH = (sH * this.size.y / 2 + 0.5)
     ctx.drawImage(
       this.img,
       sW * this.idxX,

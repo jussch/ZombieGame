@@ -38,12 +38,23 @@
     child.prototype = new Surrogate();
   };
 
-  _U.try = function (fn) {
+  // Mixin Functions
+
+  _U.mixins = {}
+
+  _U.mixins.try = function (fn) {
     if (fn instanceof Function) {
       return fn.bind(this)();
     } else {
       return fn;
     }
+  };
+
+  _U.mixin = function (obj) {
+    for (var key in _U.mixins) {
+      if (_U.mixins[key] instanceof Function) obj.prototype[key] = _U.mixins[key];
+    }
+    return obj;
   };
 
 })();

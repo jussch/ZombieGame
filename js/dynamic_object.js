@@ -15,10 +15,13 @@
     this.pos = _U.toCoord(this.pos);
     this.vel = _U.toCoord(this.vel);
     this.dim = new ZG.CollBox(this.pos, this.dim, {});
+    this.sprite = this.sprite || new ZG.Sprite(this.spriteOptions);
   };
 
+  _U.mixin(DynamicObject);
+
   DynamicObject.prototype.move = function () {
-    _U.try(this.moveEvent);
+    this.try(this.moveEvent);
     this.pos.plus(this.vel);
     // Collision Detection Here:
 
