@@ -16,6 +16,8 @@
 
   _U.mixin(Game);
 
+  Game.DIM = new ZG.Coord([1024, 576]);
+
   Game.prototype.update = function () {
     var objs = this.allObjects();
     for (var i = 0, n = objs.length; i < n; i++) {
@@ -25,6 +27,7 @@
   };
 
   Game.prototype.draw = function (ctx) {
+    ctx.clearRect(0, 0, Game.DIM.x, Game.DIM.y);
     var objs = this.allObjects();
     for (var i = 0, n = objs.length; i < n; i++) {
       var obj = objs[i];
@@ -33,14 +36,14 @@
   };
 
   Game.prototype.allObjects = function () {
-    return enemies
-      .concat(bullets)
-      .concat(player);
+    return this.enemies
+      .concat(this.bullets)
+      .concat(this.player);
   };
 
   Game.prototype.checkCollisions = function (against, objType) {
     var objs = objType.split(" ").reduce(function (prev, curr) {
-      return prev.concat(this.try(this[curr]);
+      return curr ? prev.concat(this.try(this[curr])) : prev;
     }.bind(this), []);
 
     var colls = [];
@@ -52,7 +55,7 @@
       }
     }
 
-    return colls;
+    return colls.length === 0 ? false : colls;
   };
 
 })();

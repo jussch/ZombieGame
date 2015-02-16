@@ -33,7 +33,7 @@
     if (pos instanceof ZG.Coord) {
       return pos
     } else {
-      return new LW.Coord(pos);
+      return new ZG.Coord(pos);
     }
   };
 

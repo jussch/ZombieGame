@@ -11,9 +11,10 @@
       acc: 0,
       dim: "missing",
       game: "missing",
-      collidesWith: "allObjects",
+      collidesWith: "",
       weight: 1,
-      friction: .85
+      friction: .85,
+      spriteOptions: {}
     }
     _U.extend(this, defaults, options);
 
@@ -22,13 +23,17 @@
     this.acc = _U.toCoord(this.acc);
     this.friction = _U.toCoord(this.friction);
     this.dim = new ZG.CollBox(this.pos, this.dim, { parent: this });
+
+    this.spriteOptions.parent = this;
     this.sprite = this.sprite || new ZG.Sprite(this.spriteOptions);
+    delete this.spriteOptions;
   };
 
   _U.mixin(DynamicObject);
 
   DynamicObject.prototype.update = function () {
     this.move();
+    this.sprite.angle = this.vel.toAngleDeg();
   };
 
   DynamicObject.prototype.move = function () {
@@ -38,6 +43,10 @@
       vel: this.vel,
       toCollideWith: this.collidesWith
     });
+  };
+
+  DynamicObject.prototype.draw = function (ctx) {
+    this.sprite.draw(ctx);
   };
 
 })();
