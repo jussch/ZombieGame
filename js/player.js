@@ -19,13 +19,25 @@
 
   _U.inherits(Player, ZG.DynamicObject);
 
-  Player.ACCEL = 0.2;
+  Player.ACCEL = 1.0;
   Player.BACKPEDDLEACCEL = 0.05;
   Player.TURNSPEED = 1.5;
 
   Player.prototype.update = function () {
     this.move();
     this.sprite.angle = this.angle
+  };
+
+  Player.prototype.shoot = function () {
+    this.game.bullets.push(new ZG.Bullet({
+      pos: this.pos.dup(),
+      vel: this.angleVector().times(10),
+      game: this.game
+    }));
+  };
+
+  Player.prototype.angleVector = function () {
+    return new ZG.Coord([0, 1]).setAngleDeg(this.angle)
   };
 
   Player.prototype.checkActions = function () {
@@ -41,6 +53,10 @@
       this.angle -= Player.TURNSPEED
     } else if (key.isPressed("right")) {
       this.angle += Player.TURNSPEED
+    }
+
+    if (key.isPressed("x")) {
+      this.shoot();
     }
   };
 

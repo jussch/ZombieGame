@@ -24,6 +24,7 @@
       var obj = objs[i];
       obj.update();
     }
+    this.emptyRemoveQueue();
   };
 
   Game.prototype.draw = function (ctx) {
@@ -60,6 +61,24 @@
       return false;
     } else {
       return colls;
+    }
+  };
+
+  Game.prototype.remove = function (obj) {
+    this.removeQueue.push(obj);
+  };
+
+  Game.prototype.emptyRemoveQueue = function () {
+    for (var i = 0; i < this.removeQueue.length; i++) {
+      var obj = this.removeQueue[i], name;
+      if (obj instanceof ZG.Bullet) {
+        name = "bullets";
+      } else if (obj instanceof ZG.Zombie) {
+        name = "enemies";
+      }
+      var index = this[name].indexOf(obj);
+      if (index < 0) continue;
+      this[name].splice(index, 1);
     }
   };
 

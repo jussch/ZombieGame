@@ -39,10 +39,11 @@
 
   DynamicObject.prototype.move = function () {
     this.try(this.moveEvent);
-    this.vel.plus(this.acc);
     if (this.maxVel && this.maxVel < this.vel.toScalar() ||
     this.acc.toScalar() === 0) {
       this.vel.times(this.friction);
+    } else {
+      this.vel.plus(this.acc);
     }
     this.dim.move({
       vel: this.vel,
@@ -52,6 +53,10 @@
 
   DynamicObject.prototype.draw = function (ctx) {
     this.sprite.draw(ctx);
+  };
+
+  DynamicObject.prototype.remove = function () {
+    this.game.remove(this);
   };
 
 })();

@@ -9,6 +9,7 @@
       dim: 10,
       maxVel: 1,
       acc: [0, 0.2],
+      hp: 20,
       collidesWith: "enemies",
       spriteOptions: {
         img: "zombie.gif"
@@ -49,7 +50,12 @@
   };
 
   Zombie.prototype.attackPlayer = function (player) {
-    player.vel.plus(player.pos.dup().minus(this.pos).toUnitVector().times(7));
+    player.vel.plus(player.pos.dup().minus(this.pos).toUnitVector().times(7 ));
+  };
+
+  Zombie.prototype.damage = function (amount) {
+    this.hp -= amount;
+    if (this.hp <= 0) this.remove();
   };
 
 })();
