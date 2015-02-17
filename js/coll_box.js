@@ -12,8 +12,8 @@
   };
 
   CollBox.prototype.checkCollision = function (otherBox) {
-    if ((Math.abs(this.pos.x - otherBox.pos.x) < this.dim.x - otherBox.dim.x) &&
-        (Math.abs(this.pos.y - otherBox.pos.y) < this.dim.y - otherBox.dim.y)) {
+    if ((Math.abs(this.pos.x - otherBox.pos.x) < this.dim.x + otherBox.dim.x) &&
+        (Math.abs(this.pos.y - otherBox.pos.y) < this.dim.y + otherBox.dim.y)) {
       return true;
     }
     return false;
@@ -22,20 +22,22 @@
   var moveDefaults = {
     xCollisionEvent: function (obj, depth) {
       if (obj.weight <= 0) {
+        this.parent.vel.x = 0;
         this.pos.x += depth;
       } else {
         var total = this.parent.weight + obj.weight;
-        this.pos.x += depth * this.parent.weight / total;
-        obj.dim.pos.x += depth * obj.weight / total;
+        this.pos.x += depth * obj.weight / total;
+        obj.dim.pos.x -= depth * this.parent.weight / total;
       }
     },
     yCollisionEvent: function (obj, depth) {
       if (obj.weight <= 0) {
+        this.parent.vel.y = 0;
         this.pos.y += depth;
       } else {
         var total = this.parent.weight + obj.weight;
-        this.pos.y += depth * this.parent.weight / total;
-        obj.dim.pos.y += depth * obj.weight / total;
+        this.pos.y += depth * obj.weight / total;
+        obj.dim.pos.y -= depth * this.parent.weight / total;
       }
     }
   };
@@ -43,8 +45,11 @@
   var partialMove = function (vel, toCollideWith, dir, callback) {
     this.pos[dir] += vel[dir];
     colls = this.game.checkCollisions(this.parent, toCollideWith);
+    if (!colls) {return;}
     for (var i = 0, n = colls.length; i < n; i++) {
-      var obj = colls[i], depth = this.pos[dir] - obj.dim.pos[dir];
+      var obj = colls[i];
+      var depth = (this.dim[dir] + obj.dim.dim[dir]) - Math.abs(this.pos[dir] - obj.pos[dir]);
+      if (this.pos[dir] < obj.pos[dir]) depth *= -1;
       callback.call(this, obj, depth);
     }
   };

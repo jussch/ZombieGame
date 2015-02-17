@@ -27,6 +27,8 @@
     this.spriteOptions.parent = this;
     this.sprite = this.sprite || new ZG.Sprite(this.spriteOptions);
     delete this.spriteOptions;
+
+    this.try(this.initialize);
   };
 
   _U.mixin(DynamicObject);
@@ -39,6 +41,9 @@
   DynamicObject.prototype.move = function () {
     this.try(this.moveEvent);
     this.vel.plus(this.acc)
+    if (this.maxVel && this.maxVel < this.vel.toScalar()) {
+      this.vel.setScalar(this.maxVel);
+    }
     this.dim.move({
       vel: this.vel,
       toCollideWith: this.collidesWith

@@ -49,7 +49,11 @@
     this.x = newCoord.x;
     this.y = newCoord.y;
     return this;
-  }
+  };
+
+  Coord.prototype.setScalar = function (scalar) {
+    return this.setTo(this.toUnitVector().times(scalar));
+  };
 
   Coord.prototype.max = function (pos) {
     var newCoord = this.toCoord(pos);

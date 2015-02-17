@@ -50,12 +50,17 @@
 
     for (var i = 0, n = objs.length; i < n; i++) {
       var obj = objs[i];
+      if (!obj || obj === against) continue;
       if (against.dim.checkCollision(obj.dim)) {
         colls.push(obj);
       }
     }
 
-    return colls.length === 0 ? false : colls;
+    if (colls.length === 0) {
+      return false;
+    } else {
+      return colls;
+    }
   };
 
 })();

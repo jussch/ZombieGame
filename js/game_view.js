@@ -14,17 +14,28 @@
       player: []
     })
 
-    this.game.enemies.push(new ZG.DynamicObject({
-      pos: [512, 288],
-      vel: [0, 0.5],
-      acc: 0,
-      game: this.game,
-      dim: 1,
-      moveEvent: function () { this.vel.plusAngleDeg(0.5) },
-      spriteOptions: {
-        img: "zombie.gif"
-      }
-    }));
+    for (var i = 0; i < 100; i++) {
+      var size = Math.random() * 5
+      this.game.enemies.push(new ZG.DynamicObject({
+        pos: [1024 * Math.random(), 576 * Math.random()],
+        vel: [0, 0.1],
+        maxVel: 10,
+        acc: 0,
+        weight: size * size,
+        collidesWith: "enemies",
+        game: this.game,
+        dim: 10 * size,
+        initialize: function () { this.turnSpeed = Math.random() * 3},
+        moveEvent: function () {
+          this.vel.plusAngleDeg(this.turnSpeed).times(1.01);
+        },
+        spriteOptions: {
+          img: "zombie.gif",
+          size: size
+        }
+      }));
+    }
+
   };
 
   GameView.prototype.run = function () {
