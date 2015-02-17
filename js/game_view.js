@@ -11,23 +11,31 @@
     _U.extend(this, defaults, options);
 
     this.game = this.game || new ZG.Game({
-      player: []
+      player: null
     })
 
-    for (var i = 0; i < 100; i++) {
+    this.game.player = this.player = new ZG.Player({
+      pos: [576, 288],
+      game: this.game
+    })
+
+    for (var i = 0; i < 10; i++) {
       var size = Math.random() * 5
       this.game.enemies.push(new ZG.DynamicObject({
         pos: [1024 * Math.random(), 576 * Math.random()],
         vel: [0, 0.1],
-        maxVel: 10,
-        acc: 0,
+        maxVel: 1,
+        acc: [0, 0.5],
         weight: size * size,
         collidesWith: "enemies",
         game: this.game,
         dim: 10 * size,
         initialize: function () { this.turnSpeed = Math.random() * 3},
         moveEvent: function () {
-          this.vel.plusAngleDeg(this.turnSpeed).times(1.01);
+          this.acc.setAngle(this.game.player.pos.dup().minus(this.pos).toAngle());
+        },
+        afterUpdateEvent: function () {
+          this.sprite.angle = this.game.player.pos.dup().minus(this.pos).toAngleDeg();
         },
         spriteOptions: {
           img: "zombie.gif",
@@ -42,6 +50,7 @@
     var self = this;
 
     this.updateInterval = setInterval(function () {
+      self.player.checkActions();
       self.game.update();
     }, 1000/120)
 

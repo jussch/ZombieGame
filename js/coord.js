@@ -109,14 +109,18 @@
 
   Coord.prototype.toUnitVector = function () {
     return this.dup().divided(this.toScalar());
-  }
+  };
 
   Coord.prototype.setAngle = function (newAngle) {
     var scalar = this.toScalar();
     this.x = scalar * Math.cos(newAngle);
     this.y = scalar * Math.sin(newAngle);
     return this;
-  }
+  };
+
+  Coord.prototype.setAngleDeg = function (angle) {
+    return this.setAngle(angle * Math.PI / 180);
+  };
 
   Coord.prototype.plusAngle = function (angle) {
     var newAngle = this.toAngle() + angle;

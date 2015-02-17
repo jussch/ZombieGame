@@ -35,12 +35,12 @@
 
   DynamicObject.prototype.update = function () {
     this.move();
-    this.sprite.angle = this.vel.toAngleDeg();
   };
 
   DynamicObject.prototype.move = function () {
     this.try(this.moveEvent);
-    this.vel.plus(this.acc)
+    this.vel.plus(this.acc);
+    if (this.acc.toScalar() === 0) this.vel.times(this.friction);
     if (this.maxVel && this.maxVel < this.vel.toScalar()) {
       this.vel.setScalar(this.maxVel);
     }
