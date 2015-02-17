@@ -9,6 +9,7 @@
       enemies: [],
       bullets: [],
       players: [],
+      items: [],
       removeQueue: []
     };
     _U.extend(this, defaults, options);
@@ -37,7 +38,8 @@
   };
 
   Game.prototype.allObjects = function () {
-    return this.enemies
+    return this.items
+      .concat(this.enemies)
       .concat(this.bullets)
       .concat(this.players);
   };
@@ -75,6 +77,8 @@
         name = "bullets";
       } else if (obj instanceof ZG.Zombie) {
         name = "enemies";
+      } else if (obj instanceof ZG.Item) {
+        name = "items";
       }
       var index = this[name].indexOf(obj);
       if (index < 0) continue;

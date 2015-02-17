@@ -9,7 +9,7 @@
       dim: 10,
       maxVel: 1,
       acc: [0, 0.2],
-      hp: 20,
+      hp: 5,
       collidesWith: "enemies",
       spriteOptions: {
         img: "zombie.gif"

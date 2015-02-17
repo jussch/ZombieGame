@@ -17,6 +17,11 @@
       game: this.game
     }))
 
+    this.game.items.push(new ZG.Item({
+      pos: [100, 100],
+      game: this.game
+    }))
+
     for (var i = 0; i < 10; i++) {
       this.game.enemies.push(new ZG.Zombie({
         pos: [1024 * Math.random(), 576 * Math.random()],

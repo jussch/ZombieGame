@@ -9,6 +9,7 @@
       dim: 10,
       angle: 0,
       maxVel: 2,
+      actionDelay: 0,
       collidesWith: "",
       spriteOptions: {
         img: "player.png"
@@ -26,14 +27,17 @@
   Player.prototype.update = function () {
     this.move();
     this.sprite.angle = this.angle
+    this.actionDelay -= 1
   };
 
   Player.prototype.shoot = function () {
-    this.game.bullets.push(new ZG.Bullet({
-      pos: this.pos.dup(),
-      vel: this.angleVector().times(10),
-      game: this.game
-    }));
+    if (!this.equippedItem) return;
+    this.equippedItem.use.call(this);
+  };
+
+  Player.prototype.aquire = function (item) {
+    item.owner = this;
+    this.equippedItem = item;
   };
 
   Player.prototype.angleVector = function () {
@@ -53,6 +57,10 @@
       this.angle -= Player.TURNSPEED
     } else if (key.isPressed("right")) {
       this.angle += Player.TURNSPEED
+    }
+
+    if (this.actionDelay > 0) {
+      return;
     }
 
     if (key.isPressed("x")) {
