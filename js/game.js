@@ -8,7 +8,7 @@
     var defaults = {
       enemies: [],
       bullets: [],
-      player: null,
+      players: [],
       removeQueue: []
     };
     _U.extend(this, defaults, options);
@@ -38,7 +38,7 @@
   Game.prototype.allObjects = function () {
     return this.enemies
       .concat(this.bullets)
-      .concat(this.player);
+      .concat(this.players);
   };
 
   Game.prototype.checkCollisions = function (against, objType) {

@@ -40,9 +40,9 @@
   DynamicObject.prototype.move = function () {
     this.try(this.moveEvent);
     this.vel.plus(this.acc);
-    if (this.acc.toScalar() === 0) this.vel.times(this.friction);
-    if (this.maxVel && this.maxVel < this.vel.toScalar()) {
-      this.vel.setScalar(this.maxVel);
+    if (this.maxVel && this.maxVel < this.vel.toScalar() ||
+    this.acc.toScalar() === 0) {
+      this.vel.times(this.friction);
     }
     this.dim.move({
       vel: this.vel,

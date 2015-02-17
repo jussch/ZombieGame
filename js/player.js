@@ -9,6 +9,7 @@
       dim: 10,
       angle: 0,
       maxVel: 2,
+      collidesWith: "",
       spriteOptions: {
         img: "player.png"
       }
