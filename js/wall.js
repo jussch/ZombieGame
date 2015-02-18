@@ -30,8 +30,8 @@
     // Do Nothing.
   };
 
-  Wall.prototype.draw = function (ctx) {
-    this.sprite.draw(ctx)
+  Wall.prototype.draw = function (ctx, camera) {
+    this.sprite.draw(ctx, camera)
   }
 
 })();

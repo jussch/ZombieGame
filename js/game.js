@@ -11,7 +11,8 @@
       items: [],
       walls: [],
       drawLines: [],
-      removeQueue: []
+      removeQueue: [],
+      camera: new ZG.Camera({})
     };
     _U.extend(this, defaults, options);
   };
@@ -26,18 +27,45 @@
       var obj = objs[i];
       obj.update();
     }
+    this.adjustCamera();
+    this.camera.update();
+
     this.emptyRemoveQueue();
   };
+
+  Game.prototype.adjustCamera = function () {
+    var arrX = [];
+    var arrY = [];
+    this.players.forEach(function (player) {
+      arrX.push(player.pos.x);
+      arrY.push(player.pos.y);
+    }.bind(this))
+    var arrX = arrX.sort((function(a,b){return a - b}));
+    var arrY = arrY.sort((function(a,b){return a - b}));
+    var avgX = (arrX[0] + arrX[arrX.length - 1]) / 2;
+    var avgY = (arrY[0] + arrY[arrY.length - 1]) / 2;
+    var magX = Game.DIMX/(Math.abs(avgX - arrX[arrX.length - 1]) * 3);
+    var magY = Game.DIMY/(Math.abs(avgY - arrY[arrY.length - 1]) * 3);
+    var mag = Math.min(magX, magY, Game.MAX_ZOOM);
+    this.camera.moveTo({
+      endPos: [avgX, avgY],
+      endSize: mag,
+      moveType: "linear",
+      duration: 20
+    });
+  }
 
   Game.prototype.draw = function (ctx) {
     ctx.clearRect(0, 0, Game.DIM.x, Game.DIM.y);
     var objs = this.allObjects();
     for (var i = 0, n = objs.length; i < n; i++) {
       var obj = objs[i];
-      obj.draw(ctx);
+      obj.draw(ctx, this.camera);
     }
     for (var i = 0, n = this.drawLines.length; i < n; i++) {
-      var line = this.drawLines[i];
+      var line = this.drawLines[i].map(function (cd) {
+        return this.camera.relativePos(cd)
+      }.bind(this));
       ctx.beginPath();
       ctx.moveTo(line[0].x, line[0].y);
       ctx.lineTo(line[1].x, line[1].y);

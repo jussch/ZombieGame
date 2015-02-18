@@ -50,8 +50,8 @@
     });
   };
 
-  DynamicObject.prototype.draw = function (ctx) {
-    this.sprite.draw(ctx);
+  DynamicObject.prototype.draw = function (ctx, cam) {
+    this.sprite.draw(ctx, cam);
   };
 
   DynamicObject.prototype.remove = function () {

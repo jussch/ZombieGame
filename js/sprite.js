@@ -4,7 +4,6 @@
   }
 
   var Sprite = ZG.Sprite = function (options) {
-    _U.defaultTo(options, {});
     var defaults = {
       img: null,
       size: 1,
@@ -32,18 +31,18 @@
 
   _U.mixin(Sprite);
 
-  Sprite.prototype.draw = function (ctx) {
+  Sprite.prototype.draw = function (ctx, camera) {
     this.try(this.drawEvent);
     if (this.img) {
-      this.drawImage(ctx);
+      this.drawImage(ctx, camera);
     } else {
-      this.drawShape(ctx);
+      this.drawShape(ctx, camera);
     }
   };
 
-  Sprite.prototype.drawImage = function (ctx) {
+  Sprite.prototype.drawImage = function (ctx, camera) {
     ctx.save();
-    var drawPos = this.pos.dup();
+    var drawPos = camera.relativePos(this.pos);
     drawPos.drawRound();
     ctx.translate(drawPos.x, drawPos.y);
     ctx.rotate((this.angle - this.baseAngle) * Math.PI/180);
@@ -52,8 +51,8 @@
     }
     var sW = (this.img.width / this.idxXMax + 0.5) | 0;
     var sH = (this.img.height / this.idxYMax + 0.5) | 0;
-    var relW = (sW * this.size.x / 2 + 0.5) | 0;
-    var relH = (sH * this.size.y / 2 + 0.5) | 0;
+    var relW = (sW * this.size.x * camera.size / 2 + 0.5) | 0;
+    var relH = (sH * this.size.y * camera.size / 2 + 0.5) | 0;
     ctx.drawImage(
       this.img,
       sW * this.idxX,
@@ -68,7 +67,7 @@
     ctx.restore();
   };
 
-  Sprite.prototype.drawShape = function (ctx) {
+  Sprite.prototype.drawShape = function (ctx, camera) {
     console.log('not implemented yet')
   };
 
