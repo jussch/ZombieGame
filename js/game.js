@@ -10,6 +10,7 @@
       bullets: [],
       players: [],
       items: [],
+      drawLines: [],
       removeQueue: []
     };
     _U.extend(this, defaults, options);
@@ -35,6 +36,14 @@
       var obj = objs[i];
       obj.draw(ctx);
     }
+    for (var i = 0, n = this.drawLines.length; i < n; i++) {
+      var line = this.drawLines[i];
+      ctx.beginPath();
+      ctx.moveTo(line[0].x, line[0].y);
+      ctx.lineTo(line[1].x, line[1].y);
+      ctx.stroke();
+    }
+    this.drawLines = [];
   };
 
   Game.prototype.allObjects = function () {

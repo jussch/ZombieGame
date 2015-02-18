@@ -16,7 +16,8 @@
         this.game.bullets.push(new ZG.Bullet({
           pos: this.pos.dup(),
           vel: this.angleVector().times(10),
-          game: this.game
+          game: this.game,
+          isInstant: true
         }));
       }
     };
