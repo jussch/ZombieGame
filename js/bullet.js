@@ -4,9 +4,8 @@
   }
 
   var Bullet = ZG.Bullet = function (options) {
-    _U.defaultTo(options, {});
     var defaults = {
-      dim: 2,
+      dim: 1,
       maxVel: 10,
       damage: 1,
       duration: 120,
@@ -30,7 +29,7 @@
     this.move();
     this.checkHits();
     this.duration -= 1;
-    if (this.duration < 0) {
+    if (this.duration < 0 || this.game.checkCollisions(this, "walls")) {
       this.remove();
     } else if (this.isInstant && !this.isRemoved) {
       this.update();
@@ -42,6 +41,7 @@
     if (!hits) return;
     for (var i = 0; i < hits.length; i++) {
       hits[i].damage(this.damage);
+      hits[i].vel.plus(this.vel.toUnitVector().times(4));
     }
     this.remove();
   };

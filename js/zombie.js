@@ -4,13 +4,12 @@
   }
 
   var Zombie = ZG.Zombie = function (options) {
-    _U.defaultTo(options, {});
     var defaults = {
       dim: 10,
       maxVel: 1,
       acc: [0, 0.2],
       hp: 5,
-      collidesWith: "enemies",
+      collidesWith: "enemies walls",
       spriteOptions: {
         img: "zombie.gif"
       }

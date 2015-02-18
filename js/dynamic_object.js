@@ -4,7 +4,6 @@
   }
 
   var DynamicObject = ZG.DynamicObject = function (options) {
-    _U.defaultTo(options, {});
     var defaults = {
       pos: "missing",
       vel: 0,

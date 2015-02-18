@@ -22,6 +22,19 @@
       game: this.game
     }))
 
+    for (var i = 0; i < 32; i++) {
+      this.game.walls.push(new ZG.Wall({
+        pos: [i * 32 + 16, 16],
+        dim: 16,
+        game: this.game
+      }))
+      this.game.walls.push(new ZG.Wall({
+        pos: [i * 32 + 16, 576 - 16],
+        dim: 16,
+        game: this.game
+      }))
+    }
+
     for (var i = 0; i < 10; i++) {
       this.game.enemies.push(new ZG.Zombie({
         pos: [1024 * Math.random(), 576 * Math.random()],

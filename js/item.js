@@ -4,7 +4,6 @@
   }
 
   var Item = ZG.Item = function (options) {
-    _U.defaultTo(options, {});
     var defaults = {
       dim: 2,
       maxVel: 0,
@@ -13,6 +12,7 @@
       },
       use: function() {
         this.actionDelay = 20;
+        this.vel.plus(this.angleVector().times(-2));
         this.game.bullets.push(new ZG.Bullet({
           pos: this.pos.dup(),
           vel: this.angleVector().times(10),

@@ -10,9 +10,10 @@
       angle: 0,
       maxVel: 2,
       actionDelay: 0,
-      collidesWith: "",
+      collidesWith: "walls",
       spriteOptions: {
-        img: "player.png"
+        img: "player.png",
+        baseAngle: 10
       }
     };
     ZG.DynamicObject.call(this, _U.extend(defaults, options));
@@ -26,6 +27,7 @@
 
   Player.prototype.update = function () {
     this.move();
+    if(this.game.checkCollisions(this, "walls")) console.log("ow")
     this.sprite.angle = this.angle
     this.actionDelay -= 1
   };

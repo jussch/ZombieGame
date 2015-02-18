@@ -4,7 +4,6 @@
   }
 
   var CollBox = ZG.CollBox = function (pos, dim, options) {
-    _U.defaultTo(options, {});
     _U.extend(this, options);
     this.game = this.game || this.parent.game
     this.pos = _U.toCoord(pos);

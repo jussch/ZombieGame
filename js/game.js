@@ -4,12 +4,12 @@
   }
 
   var Game = ZG.Game = function (options) {
-    _U.defaultTo(options, {});
     var defaults = {
       enemies: [],
       bullets: [],
       players: [],
       items: [],
+      walls: [],
       drawLines: [],
       removeQueue: []
     };
@@ -47,7 +47,8 @@
   };
 
   Game.prototype.allObjects = function () {
-    return this.items
+    return this.walls
+      .concat(this.items)
       .concat(this.enemies)
       .concat(this.bullets)
       .concat(this.players);
