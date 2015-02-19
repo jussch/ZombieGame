@@ -4,7 +4,6 @@
   }
 
   var Player = ZG.Player = function (options) {
-    _U.defaultTo(options, {});
     var defaults = {
       dim: 10,
       angle: 0,

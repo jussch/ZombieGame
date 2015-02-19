@@ -5,13 +5,20 @@
 
   var Level = ZG.Level = function (options) {
     var defaults = {
-      size: [2048, 1142]
+      size: [64, 48]
     };
     _U.extend(this, defaults, options);
 
-    this.size = _U.toCoord(this.size);
+    var size = this.size = _U.toCoord(this.size);
+    this.grid = _U.initArr(function() {
+      return _U.initArr("", size.x)
+    }, size.y);
   };
 
   _U.mixin(Level);
+
+  var Level.prototype.generateMaze = function () {
+
+  };
 
 })();

@@ -43,6 +43,18 @@
     child.prototype = new Surrogate();
   };
 
+  _U.initArr = function (val, length) {
+    var arr = [];
+    if (!(val instanceof Function)) {
+      var value = val;
+      val = function () { return value };
+    }
+    while (length >= 0) {
+      arr[--length] = val(length);
+    }
+    return arr;
+  };
+
   // Mixin Functions
 
   _U.mixins = {}
